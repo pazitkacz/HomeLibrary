@@ -9,6 +9,6 @@ class LibraryController extends Controller
 
     function process(array $parameters): void
     {
-        // TODO: Implement process() method.
+        $this->view = 'library';        // TODO: Implement process() method.
     }
 }

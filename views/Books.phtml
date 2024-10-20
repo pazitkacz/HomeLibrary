@@ -1,0 +1,27 @@
+<h1>Seznam knih</h1>
+<div><a href="booksEditor/" class="btn bg-primary text-white">Pridat knihu</a></div>
+<table>
+    <thead>
+    <tr>
+        <th>Nazev knihy</th>
+        <th>Autor</th>
+        <th>Kategorie</th>
+        <th>Serie</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+
+    foreach ($this->udaje['pojistenci'] as $pojistenec) : ?>
+        <tr>
+            <td><a href="pojistenec/<?= $pojistenec['id'] ?>"><?= $pojistenec['jmeno']." ".$pojistenec['prijmeni'] ?></a></td>
+            <td><?= $pojistenec['ulice'] . ', ' . $pojistenec['mesto']?></td>
+            <td><span><a href="editorPojistence/<?= $pojistenec['id'] ?>" class="btn bg-warning text-white">Editovat</a></span>
+                <span><a href="pojistenec/<?= $pojistenec['id'] ?>/odstranit" class="btn bg-danger text-white">Odstranit</a></span></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+    <?php
+    $this->paginace($this->strana, $this->celkemStran, '?strana={strana}');
+    ?>
+</table>

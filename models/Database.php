@@ -2,6 +2,8 @@
 
 namespace models;
 
+use PDO;
+
 class Database
 {
     private static PDO $connection;
@@ -9,9 +11,6 @@ class Database
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
         PDO::ATTR_EMULATE_PREPARES => false,];
 
-    /*
-     * metoda provede pripojeni do databaze, spojeni zustane otevrene pro vsechny dalsi kroky a dotazy
-     */
     public static function connect(string $host, string $user, string $password, string $database): void
     {
         if (!isset(self::$connection)) {

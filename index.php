@@ -21,7 +21,7 @@ function autoloadFunction(string $class): void
 
 spl_autoload_register("autoloadFunction");
 
-\modely\Database::connect('localhost', 'root', '', 'library');
+\models\Database::connect('localhost', 'root', '', 'library');
 $router = new SwitchController();
 $router->process(array($_SERVER['REQUEST_URI']));
-$router->vypisPohled();
+$router->getView();

@@ -1,0 +1,40 @@
+<?php
+namespace views;
+?>
+<!DOCTYPE html>
+<html lang="cs-cz">
+<head>
+    <base href="localhost" />
+    <meta charset="UTF-8" />
+    <title>Domaci knihovna</title>
+    <meta name="description" content="knihovna, aplikace, php"/>
+    <meta name="keywords" content="webova aplikace pro domaci knihovnu vyrvorena v PHP"/>
+    <link rel="stylesheet" href="../css/style.css?t=<?php echo time(); ?>" type="text/css"/>
+</head>
+
+<body>
+<header>
+    Knihovna
+</header>
+
+<!--        --><?php //foreach ($this->messages as $message) : ?>
+<!--            <p class="zprava">--><?php //= $message ?><!--</p>-->
+<!--        --><?php //endforeach ?>
+
+<nav>
+    <ul>
+        <li><a href="Library">Domu</a></li>
+        <li><a href="Books">Knihy</a></li>
+        <li><a href="Games">Deskove hry</a></li>
+        <li><a href="About">O Aplikaci</a></li>
+    </ul>
+</nav>
+<br/>
+<article>
+    <?php $this->controller->getView(); ?>
+</article>
+<footer>
+    Jitka Pletichova @2024
+</footer>
+</body>
+</html>
