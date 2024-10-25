@@ -1,0 +1,24 @@
+<h1>Seznam deskových her</h1>
+<div><a href="booksEditor/" class="btn bg-primary text-white">Pridat knihu</a></div>
+<table>
+    <thead>
+    <tr>
+        <th>Nazev hry</th>
+        <th>Počet hráčů</th>
+        <th>Kategorie</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+
+    foreach ($this->udaje['games'] as $game) : ?>
+        <tr>
+            <td><a href="games/<?= $game['id'] ?>"><?= $game['title']?></a></td>
+            <td><?= $game['minPlayer'] - $game['maxPlayer']?></td>
+            <td><?= $game['category']?></td>
+            <td><span><a href="gamesEditor/<?= $game['id'] ?>" class="btn bg-warning text-white">Editovat</a></span>
+                <span><a href="games/<?= $game['id'] ?>/delete" class="btn bg-danger text-white">Odstranit</a></span></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

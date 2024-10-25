@@ -12,16 +12,16 @@
     <tbody>
     <?php
 
-    foreach ($this->udaje['pojistenci'] as $pojistenec) : ?>
+    /** @var \dto\BookDto $book */
+    foreach ($this->data as $book) : //todo nastavit vsechny vypisujici se promenne pres getter ?>
         <tr>
-            <td><a href="pojistenec/<?= $pojistenec['id'] ?>"><?= $pojistenec['jmeno']." ".$pojistenec['prijmeni'] ?></a></td>
-            <td><?= $pojistenec['ulice'] . ', ' . $pojistenec['mesto']?></td>
-            <td><span><a href="editorPojistence/<?= $pojistenec['id'] ?>" class="btn bg-warning text-white">Editovat</a></span>
-                <span><a href="pojistenec/<?= $pojistenec['id'] ?>/odstranit" class="btn bg-danger text-white">Odstranit</a></span></td>
+            <td><a href="books/<?= $book['id'] ?>"><?= $book->getTitle()?></a></td>
+            <td><?= $book['author']?></td>
+            <td><?= $book['category']?></td>
+            <td><?= $book['series']?></td>
+            <td><span><a href="booksEditor/<?= $book['id'] ?>" class="btn bg-warning text-white">Editovat</a></span>
+                <span><a href="books/<?= $book['id'] ?>/delete" class="btn bg-danger text-white">Odstranit</a></span></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
-    <?php
-    $this->paginace($this->strana, $this->celkemStran, '?strana={strana}');
-    ?>
 </table>

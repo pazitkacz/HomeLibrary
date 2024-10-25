@@ -2,15 +2,33 @@
 
 namespace controllers;
 
+use dto\BookDto;
+use models\BookKeeper;
+
 class BooksController extends Controller
 {
+    protected BookDto $_book;
     public function process(array $parameters): void
     {
+        $bookKeeper = new BookKeeper();
 
-    }
+        if (!empty($parameters[1]) && $parameters[1] == 'delete') {
+            $bookKeeper->deleteBook($parameters[0]);
+            $this->addMessage('Kniha byla odstranena z knihovny.');
+            $this->route('Books');
+        }
+        else if (!empty($parameters[0])) {
+            $book = $bookKeeper->getBook($parameters[0]);
+            if (!$book)
+                $this->route('error');
 
-    public function getView(bool $layout = false): void
-    {
-        parent::getView($layout);
+            $this->data= $book;
+            $this->view = 'bookDetail';
+        }
+        else {
+            $books = $bookKeeper->getAllBooks();
+            $this->data = $books;
+            $this->view = 'Books';
+        }
     }
 }
