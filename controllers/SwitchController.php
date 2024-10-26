@@ -32,7 +32,7 @@ class SwitchController extends Controller
         $parsedURL['path'] = ltrim($parsedURL['path'], '/');
         $parsedURL = str_replace("/", " ", $parsedURL);
         $parsedURL["path"] = trim($parsedURL["path"]);
-        $splitPath = explode("/", $parsedURL["path"]);
+        $splitPath = explode(" ", $parsedURL["path"]);
         return $splitPath;
     }
 }

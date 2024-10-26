@@ -7,12 +7,12 @@ use models\BookKeeper;
 
 class BooksController extends Controller
 {
-    protected BookDto $_book;
+    protected BookDto $singleBook;
+    protected array $multipleBooks;
     public function process(array $parameters): void
     {
         $bookKeeper = new BookKeeper();
-
-        if (!empty($parameters[1]) && $parameters[1] == 'delete') {
+        if (!empty($parameters[0]) && !empty($parameters[1]) == 'delete') {
             $bookKeeper->deleteBook($parameters[0]);
             $this->addMessage('Kniha byla odstranena z knihovny.');
             $this->route('Books');
@@ -22,12 +22,12 @@ class BooksController extends Controller
             if (!$book)
                 $this->route('error');
 
-            $this->data= $book;
+            $this->singleBook = $book[0];
             $this->view = 'bookDetail';
         }
         else {
             $books = $bookKeeper->getAllBooks();
-            $this->data = $books;
+            $this->multipleBooks = $books;
             $this->view = 'Books';
         }
     }

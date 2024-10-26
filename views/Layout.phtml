@@ -10,6 +10,8 @@ namespace views;
     <meta name="description" content="knihovna, aplikace, php"/>
     <meta name="keywords" content="webova aplikace pro domaci knihovnu vyrvorena v PHP"/>
     <link rel="stylesheet" href="../css/style.css?t=<?php echo time(); ?>" type="text/css"/>
+    <link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.css" type="text/css"/>
+
 </head>
 
 <body>
@@ -18,15 +20,15 @@ namespace views;
 </header>
 
 <!--        --><?php //foreach ($this->messages as $message) : ?>
-<!--            <p class="zprava">--><?php //= $message ?><!--</p>-->
+<!--            <p class="message">--><?php //= $message ?><!--</p>-->
 <!--        --><?php //endforeach ?>
 
 <nav>
     <ul>
-        <li><a href="Library">Domu</a></li>
-        <li><a href="Books">Knihy</a></li>
-        <li><a href="Games">Deskove hry</a></li>
-        <li><a href="About">O Aplikaci</a></li>
+        <li><a href="/Library">Domu</a></li>
+        <li><a href="/Books">Knihy</a></li>
+        <li><a href="/Games">Deskove hry</a></li>
+        <li><a href="/About">O Aplikaci</a></li>
     </ul>
 </nav>
 <br/>
@@ -34,7 +36,7 @@ namespace views;
     <?php $this->controller->getView(); ?>
 </article>
 <footer>
-    Jitka Pletichova @2024
+    Jitka Pletichova @<?= date('Y') ?>
 </footer>
 </body>
 </html>

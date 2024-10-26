@@ -6,18 +6,9 @@ use dto\BookDto;
 
 class BookKeeper
 {
-    public function getBook(string $id): array //todo prepsat stejne jako fci getALL
+    public function getBook(string $id): array
     {
-        $out = [];
-        foreach (Database::requestOne('SELECT * FROM `books` WHERE `id` = ?', array($id)) as $book)
-            {
-                $bookDto = (new BookDto())
-                    ->setTitle($book['title'])
-                    ->setAuthor($book['author']);
-                //todo doplnit ostatni polozky z tabulky
-                $out[] = $bookDto;
-            }
-        return $out;
+        return [new BookDto(Database::requestOne('SELECT * FROM `books` WHERE `id` = ?', array($id)))];
     }
 
     public function getAllBooks(): array
@@ -27,8 +18,13 @@ class BookKeeper
         {
             $bookDto = (new BookDto())
                 ->setTitle($book['title'])
-                ->setAuthor($book['author']);//todo doplnit vsechny polozky z databaze a jeho setter
-
+                ->setAuthor($book['author'])
+                ->setId($book['id'])
+                ->setImage($book['image'])
+                ->setCategory($book['category'])
+                ->setDescription($book['description'])
+                ->setLanguage($book['language'])
+                ->setSeries($book['series']);
             $out[] = $bookDto;
         }
         return $out;

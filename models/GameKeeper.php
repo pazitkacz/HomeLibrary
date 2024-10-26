@@ -2,19 +2,31 @@
 
 namespace models;
 
+use dto\GameDto;
+
 class GameKeeper
 {
 
     public function getGame(string $id): array
     {
-        return Database::requestOne('
-        SELECT `id`, `name`, `image`, `minPlayer`, `maxPlayer`, `description` 
-        FROM `games` WHERE `id` = ?', array($id));
+        return [new GameDto(Database::requestOne('SELECT * FROM `games` WHERE `id` = ?', array($id)))];
     }
 
     public function getAllGames(): array
     {
-        return Database::requestAll('SELECT * FROM `games` ORDER BY `id` DESC');
+        $out = [];
+        foreach (Database::requestAll('SELECT * FROM `games` ORDER BY `id` ASC') as $game)
+        {
+            $gameDto = (new GameDto())
+                ->setName($game['name'])
+                ->setId($game['id'])
+                ->setImage($game['image'])
+                ->setDescription($game['description'])
+                ->setMaxPlayer($game['maxPlayer'])
+                ->setMinPlayer($game['minPlayer']);
+            $out[] = $gameDto;
+        }
+        return $out;
     }
 
     public function saveGame(int|bool $id, array $game): void

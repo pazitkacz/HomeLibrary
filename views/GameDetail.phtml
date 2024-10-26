@@ -1,1 +1,12 @@
-//detail jednotlive deskove hry
+<h1><?= $this->singleGame->getName();?></h1>
+<div class="container">
+    <div class="row">
+        <div class="col-4">Počet hráčů:</div>
+        <div class="col-4"><?= $this->singleGame->getMinPlayer();?> - <?= $this->singleGame->getMaxPlayer();?></div>
+    </div>
+    <div class="row">
+        <div class="col-8"><?= $this->singleGame->getDescription();?></div>
+        <div class="col"><img src="<?= $this->singleGame->getImage();?>" alt="<?= $this->singleGame->getName();?>"> </div>
+    </div>
+</div>
+<p><a href="/Books">Zpět na seznam</a></p>

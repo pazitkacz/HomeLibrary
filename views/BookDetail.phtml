@@ -1,2 +1,14 @@
-<h1><?php $this->book->getTitle(); //todo nastavit sablonu pres getter?></h1>
-
+<h1><?= $this->singleBook->getTitle();?></h1>
+<h2><?= $this->singleBook->getAuthor();?></h2>
+<div class="container">
+    <div class="row">
+        <div class="col-4"><?= $this->singleBook->getSeries();?></div>
+        <div class="col-4"><?= $this->singleBook->getCategory();?></div>
+        <div class="col-4"><?= $this->singleBook->getLanguage();?></div>
+    </div>
+    <div class="row">
+        <div class="col-8"><?= $this->singleBook->getDescription();?></div>
+        <div class="col"><img src="<?= $this->singleBook->getImage();?>" alt="<?= $this->singleBook->getTitle();?>"></div>
+    </div>
+</div>
+<p><a href="/Books">Zpět na seznam</a></p>

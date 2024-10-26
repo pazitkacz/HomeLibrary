@@ -12,7 +12,7 @@ body {
 }
 
 body > header {
-    height: 30px;
+    height: 50px;
     width: 100%;
     padding: 10px;
     background: #0079e3;
@@ -40,23 +40,6 @@ article h6 {
     color: #1c4700;
 }
 
-article h2 {
-    font-size: 2em;
-}
-
-.centrovany {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-}
-
-.avatar {
-    float: left;
-    width: 100px;
-    height: 100px;
-    padding-left: 10px;
-}
-
 footer {
     box-sizing: border-box;
     text-align: center;
@@ -66,32 +49,13 @@ footer {
     padding-top: 1rem;
 }
 
-.vypisDatabaze {
-    border: solid;
-    width: 100%;
-    text-align: left;
-    border-collapse: collapse;
-}
-
 th, td {
     border: solid;
     padding: 0.5rem;
 }
 
-.vypisZpravy {
+.message {
     text-align: center;
     font-size: 1.2rem;
     color: green;
 }
-
-.vypisChyby {
-    text-align: center;
-    font-size: 1.2rem;
-    color: red;
-}
-
-.formular {
-    border: none;
-}
-
-
