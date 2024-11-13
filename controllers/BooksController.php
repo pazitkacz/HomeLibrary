@@ -7,8 +7,20 @@ use models\BookKeeper;
 
 class BooksController extends Controller
 {
+    /**
+     * @var BookDto
+     */
     protected BookDto $singleBook;
+    /**
+     * @var array
+     */
     protected array $multipleBooks;
+
+    /**
+     * @param array $parameters
+     * @return void
+     * function shows all of the requested books or detail of one according to URL
+     */
     public function process(array $parameters): void
     {
         $bookKeeper = new BookKeeper();

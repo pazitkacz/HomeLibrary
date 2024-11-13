@@ -6,11 +6,20 @@ use dto\BookDto;
 
 class BookKeeper
 {
+    /**
+     * @param string $id
+     * @return BookDto[]
+     * function returns one record from the table that meets the criteria (id)
+     */
     public function getBook(string $id): array
     {
         return [new BookDto(Database::requestOne('SELECT * FROM `books` WHERE `id` = ?', array($id)))];
     }
 
+    /**
+     * @return array
+     *  function gets list of all items in the table
+     */
     public function getAllBooks(): array
     {
         $out = [];
@@ -28,6 +37,12 @@ class BookKeeper
         return $out;
     }
 
+    /**
+     * @param BookDto $book
+     * @return BookDto
+     * @throws \Exception
+     *  function saves changes or inserts new row into table according to condition
+     */
     public function saveBook(BookDto $book): BookDto
     {
         if(!$book->getId())
@@ -46,6 +61,11 @@ class BookKeeper
         return $book;
     }
 
+    /**
+     * @param int $id
+     * @return void
+     * fucntion deletes row from the table
+     */
     public function deleteBook(int $id): void
     {
         Database::request('DELETE FROM `books` WHERE `id` = ?', array($id));

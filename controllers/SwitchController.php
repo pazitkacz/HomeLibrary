@@ -6,7 +6,16 @@ use controllers\Controller;
 
 class SwitchController extends Controller
 {
+    /**
+     * @var \controllers\Controller|null
+     */
     protected ?Controller $controller = null;
+
+    /**
+     * @param array $parameters
+     * @return void
+     * function requests Controller according to used parameters and routes to correct view
+     */
     function process(array $parameters): void
     {
         $parsedURL =$this->parseURL($parameters[0]);
@@ -26,6 +35,11 @@ class SwitchController extends Controller
 
     }
 
+    /**
+     * @param string $url
+     * @return array
+     * fucntion for parsing requested URL
+     */
     private function parseURL(string $url): array
     {
         $parsedURL = parse_url($url);

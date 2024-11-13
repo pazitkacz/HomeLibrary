@@ -8,8 +8,20 @@ use models\GameKeeper;
 
 class GamesController extends Controller
 {
+    /**
+     * @var GameDto
+     */
     protected GameDto $singleGame;
+    /**
+     * @var array
+     */
     protected array $multipleGames;
+
+    /**
+     * @param array $parameters
+     * @return void
+     * function shows all of the requested games or detail of one according to URL
+     */
     function process(array $parameters): void
     {
         $gameKeeper = new GameKeeper();

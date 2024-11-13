@@ -8,7 +8,17 @@ use models\GameKeeper;
 
 class GameEditorController extends Controller
 {
+    /**
+     * @var GameDto
+     */
     public GameDto $gameDto;
+
+    /**
+     * @param array $parameters
+     * @return void
+     * @throws \Exception
+     * function that enables change or adding new game into database, shows editor with filled or empty data according to URL
+     */
     function process(array $parameters): void
     {
         $gameKeeper = new GameKeeper();

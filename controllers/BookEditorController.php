@@ -8,7 +8,17 @@ use models\BookKeeper;
 
 class BookEditorController extends Controller
 {
+    /**
+     * @var BookDto
+     */
     public BookDto $bookDto;
+
+    /**
+     * @param array $parameters
+     * @return void
+     * @throws \Exception
+     * function that enables change or adding new book into database, shows editor with filled or empty data according to URL
+     */
     function process(array $parameters): void
     {
         $bookKeeper = new BookKeeper();

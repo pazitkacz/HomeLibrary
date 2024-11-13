@@ -6,6 +6,11 @@ session_start();
 
 mb_internal_encoding("UTF-8");
 
+/**
+ * @param string $class
+ * @return void
+ * function creates autoload of controllers or models as requested
+ */
 function autoloadFunction(string $class): void
 {
 
@@ -25,3 +30,4 @@ spl_autoload_register("autoloadFunction");
 $router = new SwitchController();
 $router->process(array($_SERVER['REQUEST_URI']));
 $router->getView();
+$router->returnMessage();

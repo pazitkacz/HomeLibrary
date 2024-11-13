@@ -10,11 +10,25 @@ use ReflectionProperty;
 
 class Database
 {
+    /**
+     * @var PDO
+     */
     private static PDO $connection;
+    /**
+     * @var array
+     */
     private static array $settings = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
         PDO::ATTR_EMULATE_PREPARES => false,];
 
+    /**
+     * @param string $host
+     * @param string $user
+     * @param string $password
+     * @param string $database
+     * @return void
+     * function for connecting to database
+     */
     public static function connect(string $host, string $user, string $password, string $database): void
     {
         if (!isset(self::$connection)) {
@@ -26,9 +40,11 @@ class Database
         }
     }
 
-    /*
-     * metoda provede vypis vsech polozek z tabulky
+    /**
+     * @param string $request
+     * @param array $parameters
      * @return array|bool
+     * returns all requested data that meets the parameters
      */
     public static function requestAll(string $request, array $parameters = array()): array|bool
     {
@@ -38,6 +54,12 @@ class Database
 
     }
 
+    /**
+     * @param string $request
+     * @param array $parameters
+     * @return array|bool
+     * function returns one row from the table that meets the parameters
+     */
     public static function requestOne(string $request, array $parameters = array()): array|bool
     {
         $return = self::$connection->prepare($request);
@@ -45,9 +67,11 @@ class Database
         return $return->fetch();
     }
 
-    /*
-     * obecny dotaz pro praci s daty, vraci pocet ovlivnenych radku
+    /**
+     * @param string $request
+     * @param array $parameters
      * @return int
+     * general request for working with data, returns number of rows
      */
     public static function request(string $request, array $parameters = array()): int
     {
@@ -56,11 +80,13 @@ class Database
         return $return->rowCount();
     }
 
-    /*
-     * metoda vlozi novy zapis do tabulky
-     * @return ?int
+    /**
+     * @param string $table
+     * @param object $dto
+     * @return int|null
+     * @throws Exception
+     * function inserts new row into table
      */
-
     public static function insertNew(string $table, object $dto): ?int
     {
         $reflectionClass = new ReflectionClass($dto);
@@ -96,6 +122,14 @@ class Database
         }
     }
 
+    /**
+     * @param string $table
+     * @param object $dto
+     * @param string $condition
+     * @param mixed $conditionParameter
+     * @return bool
+     * function updates data in table that meets the condition and its parameter
+     */
     public static function changeFromObject(string $table, object $dto, string $condition, mixed $conditionParameter): bool {
 
         $reflectionClass = new ReflectionClass($dto);
@@ -128,12 +162,11 @@ class Database
         return $stmt->rowCount();
     }
 
-    public static function change(string $table, array $values, string $condition, int $parameters): bool
-    {
-        return self::request("UPDATE `$table` SET `" . implode('` = ?, `', array_keys($values)) .
-            "` = ? " . $condition, array_merge(array_values($values), $parameters));
-    }
-
+    /**
+     * @param string $table
+     * @return int|null
+     * function returns id of the last inserted row
+     */
     public static function getLastInsertId(string $table): ?int {
         $query = "SELECT `id` FROM `$table` ORDER BY `id` DESC LIMIT 1";
         $return = self::$connection->prepare($query);
