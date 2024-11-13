@@ -2,16 +2,16 @@
 
 namespace dto;
 
-class BookDto
+class BookDto extends BaseDto
 {
-    private string $title;
-    private string $author;
-    private string $language;
-    private int $id;
-    private ?string $series;
-    private string $category;
-    private ?string $image;
-    private ?string $description;
+    private ?string $title = null;
+    private ?string $author = null;
+    private ?string $language = null;
+    private ?int $id = null;
+    private ?string $series = null;
+    private ?string $category = null;
+    private ?string $image = null;
+    private ?string $description = null;
 
     /**
      * @param array|null $data
@@ -19,62 +19,62 @@ class BookDto
     public function __construct(?array $data = null)
     {
         if ($data) {
-            $this->title = $data['title'];
-            $this->author = $data['author'];
-            $this->language = $data['language'];
-            $this->id = $data['id'];
-            $this->series = $data['series'];
-            $this->category = $data['category'];
-            $this->image = $data['image'];
-            $this->description = $data['description'];
+            $this->title = $data['title'] ?? null;
+            $this->author = $data['author'] ?? null;
+            $this->language = $data['language'] ?? null;
+            $this->id = $data['id'] ?? null;
+            $this->series = $data['series'] ?? null;
+            $this->category = $data['category'] ?? null;
+            $this->image = $data['image'] ?? null;
+            $this->description = $data['description'] ?? null;
         }
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): BookDto
+    public function setTitle(?string $title): BookDto
     {
         $this->title = $title;
         return $this;
     }
 
-    public function getAuthor(): string
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author): BookDto
+    public function setAuthor(?string $author): BookDto
     {
         $this->author = $author;
         return $this;
     }
 
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
 
-    public function setLanguage(string $language): BookDto
+    public function setLanguage(?string $language): BookDto
     {
         $this->language = $language;
         return $this;
     }
 
-    public function getCategory(): string
+    public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    public function setCategory(string $category): BookDto
+    public function setCategory(?string $category): BookDto
     {
         $this->category = $category;
         return $this;
     }
 
-    public function getSeries(): string
+    public function getSeries(): ?string
     {
         return $this->series;
     }
@@ -85,18 +85,18 @@ class BookDto
         return $this;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): BookDto
+    public function setId(?int $id): BookDto
     {
         $this->id = $id;
         return $this;
     }
 
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -107,7 +107,7 @@ class BookDto
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -116,5 +116,9 @@ class BookDto
     {
         $this->description = $description;
         return $this;
+    }
+
+    public function isDataAvailable(): bool {
+        return ($this->category && $this->title && $this->author && $this->language);
     }
 }

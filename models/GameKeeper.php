@@ -29,12 +29,22 @@ class GameKeeper
         return $out;
     }
 
-    public function saveGame(int|bool $id, array $game): void
+    public function saveGame(GameDto $game): GameDto
     {
-        if(!$id)
-            Database::insert('games', $game);
-        else
-            Database::change('games', $game, 'WHERE `id` = ?', array($id));
+        if(!$game->getId())
+            Database::insertNew(
+                table:'games',
+                dto: $game
+            );
+        else {
+            Database::changeFromObject(
+                table: 'games',
+                dto: $game,
+                condition: $game->getVariableName('getId'),
+                conditionParameter: $game->getId()
+            );
+        }
+        return $game;
     }
 
     public function deleteGame(int $id): void

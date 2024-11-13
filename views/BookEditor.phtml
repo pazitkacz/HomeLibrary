@@ -1,0 +1,56 @@
+<h1>Editor Knih</h1>
+<form method="post">
+    <input type="hidden" name="id" value="<?= $this->bookDto->getId() ?>">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <label>Titul</label>
+                <input type="text" class="form-control" name="title" value="<?= $this->bookDto->getTitle() ?>">
+            </div>
+            <div class="col">
+                <label>Autor</label>
+                <input type="text" class="form-control" name="author" value="<?= $this->bookDto->getAuthor() ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Jazyk</label>
+                <input type="text" class="form-control" name="language" value="<?= $this->bookDto->getLanguage() ?>">
+            </div>
+            <div class="col-4">
+                <label>Categorie</label>
+                <input type="text" class="form-control" name="category" value="<?= $this->bookDto->getCategory() ?>">
+            </div>
+            <div class="col-4">
+                <label>Serie (je-li k dispozici)</label>
+                <input type="text" class="form-control" name="series" value="<?= $this->bookDto->getSeries() ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Adresa umisteni obrazku (napr. images/books/titul.jpg)</label>
+                <input type="text" class="form-control" name="image" value="<?= $this->bookDto->getImage() ?>">
+            </div>
+        </div>
+        <div class="row-md">
+            <div class="col-md-8">
+                <label>Popis</label><br>
+                <textarea name="description" class="form-control" value="<?= $this->bookDto->getDescription() ?>"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="row-cols-6" align="center">
+        <input type="submit" value="ulozit" class="btn bg-success text-white">
+        </div>
+        <br>
+    </div>
+
+
+
+
+
+
+
+
+
+</form>

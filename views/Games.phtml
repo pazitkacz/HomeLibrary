@@ -1,5 +1,5 @@
 <h1>Seznam deskovych her</h1>
-<div><a href="gamesEditor/" class="btn bg-primary text-white">Pridat hru</a></div>
+<div><a href="gameEditor/" class="btn bg-primary text-white">Pridat hru</a></div>
 <table>
     <thead>
     <tr>
@@ -15,7 +15,7 @@
         <tr>
             <td><a href="games/<?= $game->getId() ?>"><?= $game->getName()?></a></td>
             <td><?= $game->getMinPlayer()?> - <?=$game->getMaxPlayer();?></td>
-            <td><span><a href="gamesEditor/<?= $game->getId()?>" class="btn bg-warning text-white">Editovat</a></span>
+            <td><span><a href="gameEditor/<?= $game->getId()?>" class="btn bg-warning text-white">Editovat</a></span>
                 <span><a href="games/<?= $game->getId() ?>/delete" class="btn bg-danger text-white">Odstranit</a></span></td>
         </tr>
     <?php endforeach; ?>

@@ -1,0 +1,50 @@
+<h1>Editor deskovych her</h1>
+
+<form method="post">
+    <input type="hidden" name="id" value="<?= $this->gameDto->getId() ?>">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <label>Nazev</label><br>
+                <input type="text" class="form-control"  name="name" value="<?= $this->gameDto->getName() ?>">
+            </div>
+            <div class="col-6">
+                <label>Adresa umisteni obrazu (napr. images/games/jmeno.jpg)</label><br>
+                <input type="text" class="form-control"  name="image" value="<?= $this->gameDto->getImage() ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Minimum hracu</label>
+                <input type="text" class="form-control"  name="minPlayer" value="<?= $this->gameDto->getMinPlayer() ?>">
+            </div>
+            <div class="col-4">
+                <label>Maximum hracu</label>
+                <input type="text" class="form-control"  name="maxPlayer" value="<?= $this->gameDto->getMaxPlayer() ?>">
+            </div>
+            <div class="col-4">
+                <label>Poznamka (napr.serie)</label>
+                <input type="text" class="form-control"  name="note" value="<?= $this->gameDto->getNote() ?>">
+            </div>
+        </div>
+        <div class="row-md">
+            <div class="col-md-8">
+                <label>Popis</label><br>
+                <textarea class="form-control" rows="2" name="description" value="<?= $this->gameDto->getDescription() ?>"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="row-cols-6" align="center">
+            <input type="submit" value="ulozit" class="btn bg-success text-white">
+        </div>
+        <br>
+    </div>
+
+
+
+
+
+
+
+
+</form>

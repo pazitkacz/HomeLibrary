@@ -20,9 +20,7 @@ class BookKeeper
                 ->setTitle($book['title'])
                 ->setAuthor($book['author'])
                 ->setId($book['id'])
-                ->setImage($book['image'])
                 ->setCategory($book['category'])
-                ->setDescription($book['description'])
                 ->setLanguage($book['language'])
                 ->setSeries($book['series']);
             $out[] = $bookDto;
@@ -30,12 +28,22 @@ class BookKeeper
         return $out;
     }
 
-    public function saveBook(int|bool $id, array $book): void
+    public function saveBook(BookDto $book): BookDto
     {
-        if(!$id)
-            Database::insert('books', $book);
-        else
-            Database::change('books', $book, 'WHERE `id` = ?', array($id));
+        if(!$book->getId())
+            Database::insertNew(
+                table:'books',
+                dto: $book
+            );
+        else {
+            Database::changeFromObject(
+                table: 'books',
+                dto: $book,
+                condition: $book->getVariableName('getId'),
+                conditionParameter: $book->getId()
+            );
+        }
+        return $book;
     }
 
     public function deleteBook(int $id): void

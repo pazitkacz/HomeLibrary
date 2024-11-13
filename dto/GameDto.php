@@ -2,15 +2,15 @@
 
 namespace dto;
 
-class GameDto
+class GameDto extends BaseDto
 {
-    private int $id;
-    private string $name;
-    private string $description;
-    private string $image;
-    private ?string $note;
-    private int $minPlayer;
-    private int $maxPlayer;
+    private ?int $id = null;
+    private ?string $name = null;
+    private ?string $description = null;
+    private ?string $image = null;
+    private ?string $note = null;
+    private ?int $minPlayer = null;
+    private ?int $maxPlayer = null;
 
     public function __construct(?array $data = null)
     {
@@ -25,7 +25,19 @@ class GameDto
         }
     }
 
-    public function getId(): int
+    public function __serialize() {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'image' => $this->image,
+            'note' => $this->note,
+            'minPlayer' => $this->minPlayer,
+            'maxPlayer' => $this->maxPlayer,
+        ];
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -36,7 +48,7 @@ class GameDto
         return $this;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -47,7 +59,7 @@ class GameDto
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -58,7 +70,7 @@ class GameDto
         return $this;
     }
 
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -69,7 +81,7 @@ class GameDto
         return $this;
     }
 
-    public function getNote(): string
+    public function getNote(): ?string
     {
         return $this->note;
     }
@@ -80,7 +92,7 @@ class GameDto
         return $this;
     }
 
-    public function getMinPlayer(): int
+    public function getMinPlayer(): ?int
     {
         return $this->minPlayer;
     }
@@ -91,7 +103,7 @@ class GameDto
         return $this;
     }
 
-    public function getMaxPlayer(): int
+    public function getMaxPlayer(): ?int
     {
         return $this->maxPlayer;
     }
@@ -101,5 +113,10 @@ class GameDto
         $this->maxPlayer = $maxPlayer;
         return $this;
     }
+
+    public function isDataAvailable(): bool {
+        return ($this->name && $this->minPlayer && $this->maxPlayer);
+    }
+
 
 }

@@ -1,5 +1,5 @@
 <h1>Seznam knih</h1>
-<div><a href="booksEditor/" class="btn bg-primary text-white">Pridat knihu</a></div>
+<div><a href="bookEditor/" class="btn bg-primary text-white">Pridat knihu</a></div>
 <table>
     <thead>
     <tr>
@@ -19,7 +19,7 @@
             <td><?= $book->getAuthor()?></td>
             <td><?= $book->getCategory()?></td>
             <td><?= $book->getSeries()?></td>
-            <td><span><a href="booksEditor/<?= $book->getId()?>" class="btn bg-warning text-white">Editovat</a></span>
+            <td><span><a href="bookEditor/<?= $book->getId()?>" class="btn bg-warning text-white">Editovat</a></span>
                 <span><a href="books/<?= $book->getId() ?>/delete" class="btn bg-danger text-white">Odstranit</a></span></td>
         </tr>
     <?php endforeach; ?>

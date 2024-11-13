@@ -2,7 +2,11 @@
 
 namespace models;
 
+use Exception;
+use InvalidArgumentException;
 use PDO;
+use ReflectionClass;
+use ReflectionProperty;
 
 class Database
 {
@@ -54,21 +58,88 @@ class Database
 
     /*
      * metoda vlozi novy zapis do tabulky
-     * @return bool
+     * @return ?int
      */
-    public static function insert(string $table, array $parameters = array()): bool
-    {
-        return self::request("INSERT INTO `$table` (`" .
-            implode('`, `', array_keys($parameters)) .
-            "`) VALUES (" . str_repeat('?,', sizeOf($parameters) - 1) . "?)",
-            array_values($parameters));
 
+    public static function insertNew(string $table, object $dto): ?int
+    {
+        $reflectionClass = new ReflectionClass($dto);
+        $properties = $reflectionClass->getProperties(ReflectionProperty::IS_PRIVATE);
+
+        $columns = [];
+        $placeholders = [];
+        $values = [];
+
+        foreach ($properties as $property) {
+            $columns[] = $property->getName();
+            $placeholders[] = ':' . $property->getName();
+            $values[$property->getName()] = $property->getValue($dto);
+        }
+
+        $sql = sprintf(
+            "INSERT INTO %s (%s) VALUES (%s)",
+            $table,
+            implode(", ", $columns),
+            implode(", ", $placeholders)
+        );
+
+        $stmt = self::$connection->prepare($sql);
+
+        foreach ($values as $placeholder => $value) {
+            $stmt->bindValue(":$placeholder", $value);
+        }
+
+        if ($stmt->execute()) {
+            return self::getLastInsertId($table);
+        } else {
+            throw new Exception("Failed to insert DTO.");
+        }
     }
 
-    public static function change(string $table, array $values, string $condition, array $parameters = array()): bool
+    public static function changeFromObject(string $table, object $dto, string $condition, mixed $conditionParameter): bool {
+
+        $reflectionClass = new ReflectionClass($dto);
+        $properties = $reflectionClass->getProperties(ReflectionProperty::IS_PRIVATE);
+
+        $setClauses = [];
+        $values = [];
+
+        foreach ($properties as $property) {
+            $propertyName = $property->getName();
+            $propertyValue = $property->getValue($dto);
+
+            if ($propertyName === 'id') {
+                continue;
+            }
+
+            $setClauses[] = "$propertyName = :$propertyName";
+            $values[$propertyName] = $propertyValue;
+        }
+
+        $sql = "UPDATE " . $table . " SET " . implode(", ", $setClauses) . " WHERE " . $condition . " = :conditionParameter";
+
+        $stmt = self::$connection->prepare($sql);
+        $stmt->bindValue(":conditionParameter", $conditionParameter);
+        foreach ($values as $placeholder => $value) {
+            $stmt->bindValue(":$placeholder", $value);
+        }
+
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    public static function change(string $table, array $values, string $condition, int $parameters): bool
     {
         return self::request("UPDATE `$table` SET `" . implode('` = ?, `', array_keys($values)) .
             "` = ? " . $condition, array_merge(array_values($values), $parameters));
+    }
+
+    public static function getLastInsertId(string $table): ?int {
+        $query = "SELECT `id` FROM `$table` ORDER BY `id` DESC LIMIT 1";
+        $return = self::$connection->prepare($query);
+        $return->execute();
+        $data = $return->fetch(\PDO::FETCH_ASSOC);
+        return (int)$data['id'];
     }
 
 }
