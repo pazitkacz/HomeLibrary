@@ -41,7 +41,7 @@ class BookEditorController extends Controller
 
             $this->bookDto
                 ->setId($id)
-                ->setTitle($title])
+                ->setTitle($title)
                 ->setAuthor($author)
                 ->setLanguage($language)
                 ->setCategory($category)
