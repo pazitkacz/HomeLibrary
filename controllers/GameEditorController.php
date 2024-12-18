@@ -1,4 +1,4 @@
-<?php //todo projit cely kontroler a zkontrolovat funkcnost
+<?php
 
 namespace controllers;
 
@@ -24,14 +24,28 @@ class GameEditorController extends Controller
         $gameKeeper = new GameKeeper();
         $this->gameDto = new GameDto();
         if ($_POST){
+            // Sanitize and validate input data
+            $id = isset($_POST['id']) ? filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT) : null;
+            $name = isset($_POST['name']) ? trim(htmlspecialchars($_POST['name'])) : null;
+            $note = isset($_POST['note']) ? trim(htmlspecialchars($_POST['note'])) : null;
+            $minPlayer = isset($_POST['minPlayer']) ? filter_var($_POST['minPlayer'], FILTER_VALIDATE_INT) : null;
+            $maxPlayer = isset($_POST['maxPlayer']) ? filter_var($_POST['maxPlayer'], FILTER_VALIDATE_INT) : null;
+            $image = isset($_POST['image']) ? trim(htmlspecialchars($_POST['image'])) : null;
+            $description = isset($_POST['description']) ? trim(htmlspecialchars($_POST['description'])) : null;
+            // Checking for valid path and existing of file
+            if (strpos($image, '..') !== false || !preg_match('/^[a-zA-Z0-9_\-\/.]+$/', $image)) {
+                $this->addMessage('Zadana neplatna adresa obrazku.');}
+            if (!file_exists($image)) {
+                $this->addMessage('Zadana neplatna adresa obrazku.');}
+
             $this->gameDto
-                ->setId($_POST['id'])
-                ->setName($_POST['name'])
-                ->setNote($_POST['note'])
-                ->setMinPlayer($_POST['minPlayer'])
-                ->setMaxPlayer($_POST['maxPlayer'])
-                ->setImage($_POST['image'])
-                ->setDescription($_POST['description']);
+                ->setId($id)
+                ->setName($name)
+                ->setNote($note)
+                ->setMinPlayer($minPlayer)
+                ->setMaxPlayer($maxPlayer)
+                ->setImage($image)
+                ->setDescription($description);
 
             if (!$this->gameDto->isDataAvailable())
             {

@@ -24,15 +24,30 @@ class BookEditorController extends Controller
         $bookKeeper = new BookKeeper();
         $this->bookDto = new BookDto();
         if ($_POST){
+
+            $id = isset($_POST['id']) ? filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT) : null;
+            $title = isset($_POST['title']) ? trim(htmlspecialchars($_POST['title'])) : null;
+            $author = isset($_POST['author']) ? trim(htmlspecialchars($_POST['author'])) : null;
+            $language = isset($_POST['language']) ? trim(htmlspecialchars($_POST['language'])) : null;
+            $category = isset($_POST['category']) ? trim(htmlspecialchars($_POST['category'])) : null;
+            $series = isset($_POST['series']) ? trim(htmlspecialchars($_POST['series'])) : null;
+            $image = isset($_POST['image']) ? trim(htmlspecialchars($_POST['image'])) : null;
+            $description = isset($_POST['description']) ? trim(htmlspecialchars($_POST['description'])) : null;
+            // Checking for valid path and existing of file
+            if (strpos($image, '..') !== false || !preg_match('/^[a-zA-Z0-9_\-\/.]+$/', $image)) {
+                $this->addMessage('Zadana neplatna adresa obrazku.');}
+            if (!file_exists($image)) {
+                $this->addMessage('Zadana neplatna adresa obrazku.');}
+
             $this->bookDto
-                ->setId($_POST['id'])
-                ->setTitle($_POST['title'])
-                ->setAuthor($_POST['author'])
-                ->setLanguage($_POST['language'])
-                ->setCategory($_POST['category'])
-                ->setSeries($_POST['series'])
-                ->setImage($_POST['image'])
-                ->setDescription($_POST['description']);
+                ->setId($id)
+                ->setTitle($title])
+                ->setAuthor($author)
+                ->setLanguage($language)
+                ->setCategory($category)
+                ->setSeries($series)
+                ->setImage($image)
+                ->setDescription($description);
 
             if (!$this->bookDto->isDataAvailable())
             {
